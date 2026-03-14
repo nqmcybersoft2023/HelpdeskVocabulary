@@ -1,28 +1,20 @@
-/* /* ===== RESET & SCROLLBAR ===== */
+/* ==========================================
+   1. RESET & SCROLLBAR
+   ========================================== */
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
-/* Tùy chỉnh thanh cuộn cho Dark Mode */
-::-webkit-scrollbar {
-    width: 8px;
-}
-::-webkit-scrollbar-track {
-    background: #0f172a; 
-}
-::-webkit-scrollbar-thumb {
-    background: #334155; 
-    border-radius: 4px;
-}
-::-webkit-scrollbar-thumb:hover {
-    background: #475569; 
-}
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #0f172a; }
+::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #475569; }
 
 body {
     font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
-    background: #0f172a;
+    background: #0f172a; /* Màu nền Dark Mode */
     color: white;
     text-align: center;
     line-height: 1.4;
@@ -31,7 +23,9 @@ body {
     min-height: 100vh;
 }
 
-/* ===== HEADER ===== */
+/* ==========================================
+   2. HEADER
+   ========================================== */
 header {
     background: #1e293b;
     padding: 20px;
@@ -47,12 +41,14 @@ h1 {
     margin-bottom: 5px;
 }
 
-header p {
-    font-size: 14px;
-    color: #94a3b8;
+header p { 
+    font-size: 14px; 
+    color: #94a3b8; 
 }
 
-/* ===== DICTIONARY SEARCH (MỚI BỔ SUNG) ===== */
+/* ==========================================
+   3. TỪ ĐIỂN TÌM KIẾM (DICTIONARY SEARCH)
+   ========================================== */
 .search-container {
     width: 90%;
     max-width: 600px;
@@ -73,10 +69,7 @@ header p {
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
-#searchInput::placeholder {
-    color: #64748b;
-}
-
+#searchInput::placeholder { color: #64748b; }
 #searchInput:focus {
     border-color: #3b82f6;
     box-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
@@ -107,25 +100,14 @@ header p {
     transition: background 0.2s;
 }
 
-.search-item:last-child {
-    border-bottom: none;
-}
+.search-item:last-child { border-bottom: none; }
+.search-item:hover { background: #334155; }
+.search-item strong { color: #60a5fa; font-size: 16px; }
+.search-item span { color: #cbd5e1; font-size: 15px; }
 
-.search-item:hover {
-    background: #334155;
-}
-
-.search-item strong {
-    color: #60a5fa;
-    font-size: 16px;
-}
-
-.search-item span {
-    color: #cbd5e1;
-    font-size: 15px;
-}
-
-/* ===== STATS ===== */
+/* ==========================================
+   4. BẢNG THỐNG KÊ (STATS)
+   ========================================== */
 .stats {
     display: flex;
     justify-content: center;
@@ -138,8 +120,6 @@ header p {
     background: #1e293b;
     padding: 12px 25px;
     border-radius: 10px;
-    font-size: 18px;
-    min-width: 120px;
     border: 1px solid #334155;
     box-shadow: 0 4px 6px rgba(0,0,0,0.2);
     display: flex;
@@ -160,19 +140,26 @@ header p {
 #score { color: #fbbf24; }
 #lesson { color: #60a5fa; }
 
-/* ===== GAME CONTAINER ===== */
+/* ==========================================
+   5. KHU VỰC TRÒ CHƠI (GAME CONTAINER)
+   ========================================== */
 .game-container {
     display: flex;
     justify-content: center;
-    gap: 80px;
-    margin-top: 40px;
-    padding: 10px;
+    flex-direction: row;
+    width: 100%;
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 0 15px;
 }
 
-.column { width: 260px; }
+.column {
+    display: flex;
+    flex-direction: column;
+}
 
 .column h3 {
-    margin-bottom: 15px;
+    margin-bottom: 20px;
     font-weight: 600;
     color: #cbd5e1;
     letter-spacing: 1px;
@@ -180,41 +167,48 @@ header p {
     font-size: 16px;
 }
 
+/* ĐÂY LÀ ĐIỂM QUAN TRỌNG GIẢI QUYẾT LỖI CÁC Ô DÍNH VÀO NHAU */
 #viColumn, #enColumn {
     display: flex;
     flex-direction: column;
-    gap: 14px;
+    gap: 24px; /* Đẩy các thẻ bài giãn cách xa nhau ra theo chiều dọc */
+    width: 100%;
 }
 
-/* ===== CARD ===== */
+/* ==========================================
+   6. THẺ BÀI TỪ VỰNG (CARD)
+   ========================================== */
 .card {
     background: #1e293b;
     border: 2px solid #334155;
-    padding: 16px;
     border-radius: 12px;
     cursor: pointer;
-    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-    font-size: 16px;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: 0 4px 6px -1px rgba(0,0,0,0.2);
     user-select: none;
     font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 60px;
+    padding: 10px 15px;
+    word-break: break-word;
 }
 
 .card:hover {
     background: #334155;
     transform: translateY(-3px);
-    box-shadow: 0 10px 15px -3px rgba(0,0,0,0.3);
     border-color: #475569;
+    box-shadow: 0 8px 12px rgba(0,0,0,0.3);
 }
 
 .selected {
-    background: rgba(59, 130, 246, 0.1);
+    background: rgba(59, 130, 246, 0.15);
     border-color: #3b82f6;
-    box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
+    box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
     transform: translateY(-3px);
 }
 
-/* Thêm cả .matched để tương thích với file JS */
 .correct, .matched {
     background: #16a34a !important;
     border-color: #16a34a !important;
@@ -222,7 +216,6 @@ header p {
     animation: pop 0.4s ease;
     pointer-events: none;
     opacity: 0.8;
-    transform: scale(0.98);
 }
 
 .wrong {
@@ -232,7 +225,9 @@ header p {
     animation: shake 0.4s ease;
 }
 
-/* ===== ANIMATIONS ===== */
+/* ==========================================
+   7. HIỆU ỨNG CHUYỂN ĐỘNG (ANIMATIONS)
+   ========================================== */
 @keyframes shake {
     0%, 100% { transform: translateX(0); }
     20%, 60% { transform: translateX(-6px); }
@@ -245,14 +240,16 @@ header p {
     100% { transform: scale(0.98); }
 }
 
-/* ===== BUTTON ===== */
-.controls { margin-top: 40px; }
+/* ==========================================
+   8. NÚT BẤM (BUTTON)
+   ========================================== */
+.controls { margin-top: 30px; margin-bottom: 40px; }
 
 button {
     background: #3b82f6;
     color: white;
     border: none;
-    padding: 14px 30px;
+    padding: 14px 35px;
     border-radius: 8px;
     cursor: pointer;
     font-size: 16px;
@@ -271,7 +268,9 @@ button:active {
     transform: translateY(0);
 }
 
-/* ===== FOOTER ===== */
+/* ==========================================
+   9. FOOTER
+   ========================================== */
 footer {
     margin-top: auto;
     background: #1e293b;
@@ -283,36 +282,60 @@ footer {
 }
 
 
-/* =========================
-   MEDIA QUERIES (Giữ nguyên logic của bạn)
-   ========================= */
+/* ==========================================
+   10. MEDIA QUERIES (HỖ TRỢ ĐA MÀN HÌNH)
+   ========================================== */
 
-@media (max-width:480px) {
+/* ĐIỆN THOẠI NHỎ (Dưới 380px) */
+@media (max-width: 379px) {
+    h1 { font-size: 20px; }
+    .stats { gap: 10px; margin-top: 15px; }
+    .stat-box { font-size: 11px; min-width: 80px; padding: 8px; }
+    .stat-box span { font-size: 18px; }
+    
+    .game-container { gap: 12px; }
+    .column { width: 48%; }
+    .column h3 { font-size: 13px; margin-bottom: 12px; }
+    
+    #viColumn, #enColumn { gap: 14px; } /* Thu hẹp khoảng cách dọc trên đt nhỏ */
+    .card { font-size: 13px; padding: 10px 5px; min-height: 55px; }
+}
+
+/* ĐIỆN THOẠI TIÊU CHUẨN & LỚN (380px - 576px) */
+@media (min-width: 380px) and (max-width: 576px) {
     h1 { font-size: 22px; }
-    .search-container { width: 95%; }
-    .stats { gap: 10px; }
-    .stat-box { font-size: 12px; min-width: 90px; padding: 10px; }
+    .stats { gap: 15px; }
+    .stat-box { font-size: 12px; min-width: 100px; padding: 10px; }
     .stat-box span { font-size: 20px; }
-    .game-container { flex-direction: column; align-items: center; gap: 25px; }
-    .column { width: 90%; }
-    .card { font-size: 18px; padding: 16px; }
-    #searchResults { max-height: 200px; }
+    
+    .game-container { gap: 15px; }
+    .column { width: 48%; } 
+    .column h3 { font-size: 14px; margin-bottom: 15px; }
+    
+    #viColumn, #enColumn { gap: 16px; } /* Giãn dọc vừa phải cho đt */
+    .card { font-size: 14px; padding: 12px 8px; min-height: 60px; }
 }
 
-@media (min-width:481px) and (max-width:768px) {
-    .game-container { flex-direction: column; align-items: center; gap: 30px; }
-    .column { width: 80%; }
-    .card { font-size: 18px; padding: 16px; }
-}
-
-@media (min-width:769px) and (max-width:1024px) {
+/* MÁY TÍNH BẢNG DỌC (577px - 768px) */
+@media (min-width: 577px) and (max-width: 768px) {
     .game-container { gap: 40px; }
-    .column { width: 300px; }
-    .card { font-size: 17px; }
+    .column { width: 45%; max-width: 280px; }
+    #viColumn, #enColumn { gap: 20px; }
+    .card { font-size: 16px; padding: 14px; min-height: 60px; }
 }
 
-@media (min-width:1025px) {
-    .game-container { gap: 100px; }
+/* MÁY TÍNH BẢNG NGANG & LAPTOP NHỎ (769px - 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .game-container { gap: 80px; }
+    .column { width: 40%; max-width: 300px; }
+    #viColumn, #enColumn { gap: 22px; }
+    .card { font-size: 16px; padding: 15px; min-height: 60px; }
+}
+
+/* MÀN HÌNH MÁY TÍNH LỚN (> 1024px) */
+@media (min-width: 1025px) {
+    .game-container { gap: 120px; }
     .column { width: 320px; }
-    .card { font-size: 18px; padding: 16px; }
+    #viColumn, #enColumn { gap: 24px; } /* Khoảng cách dọc siêu thoáng */
+    .card { font-size: 18px; padding: 16px; min-height: 65px; border-radius: 14px; }
 }
