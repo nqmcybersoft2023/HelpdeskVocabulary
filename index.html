@@ -1,83 +1,58 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="vi">
 <head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>IT Helpdesk Vocabulary Game</title>
-
-<link rel="stylesheet" href="style.css">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IT Helpdesk Vocabulary Game & Dictionary</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<header>
+    <header>
+        <h1>IT Helpdesk Vocabulary Trainer</h1>
+        <p>Match English words with Vietnamese meanings & Search Dictionary</p>
+    </header>
 
-<h1>IT Helpdesk Vocabulary Trainer</h1>
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="🔍 Tìm kiếm từ vựng Anh - Việt, Việt - Anh...">
+        <div id="searchResults"></div>
+    </div>
 
-<p>Match English words with Vietnamese meanings</p>
+    <div class="stats">
+        <div class="stat-box">Lesson <span id="lesson">1</span></div>
+        <div class="stat-box">Score <span id="score">0</span></div>
+    </div>
 
-</header>
-<div class="search-container">
-    <input type="text" id="searchInput" placeholder="🔍 Tìm kiếm từ vựng Anh - Việt, Việt - Anh...">
-    <div id="searchResults"></div>
-</div>
+    <div class="game-container">
+        <div class="column">
+            <h3>Tiếng Việt</h3>
+            <div id="viColumn"></div>
+        </div>
+        <div class="column">
+            <h3>Tiếng Anh</h3>
+            <div id="enColumn"></div>
+        </div>
+    </div>
 
-<div class="stats">
+    <div class="controls">
+        <button onclick="loadLesson()">Restart Lesson</button>
+    </div>
 
-<div class="stat-box">
-Lesson
-<span id="lesson">1</span>
-</div>
+    <footer>
+        <p>Learn Helpdesk Words • Technical Support Training</p>
+    </footer>
 
-<div class="stat-box">
-Score
-<span id="score">0</span>
-</div>
+    <div id="wordModal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <div class="word-header">
+                <h2 id="modalEnWord">Word</h2>
+                <button class="speak-btn" onclick="speakModalWord()" title="Nghe phát âm">🔊</button>
+            </div>
+            <p class="word-meaning">Nghĩa: <span id="modalViMeaning">Nghĩa của từ</span></p>
+        </div>
+    </div>
 
-</div>
-
-
-<div class="game-container">
-
-<div class="column">
-
-<h3>Vietnamese</h3>
-
-<div id="viColumn"></div>
-
-</div>
-
-
-<div class="column">
-
-<h3>English</h3>
-
-<div id="enColumn"></div>
-
-</div>
-
-</div>
-
-
-<div class="controls">
-
-<button onclick="loadLesson()">Restart Lesson</button>
-
-</div>
-
-
-<footer>
-
-<p>Learn 500 Helpdesk Words • Technical Support Training</p>
-
-</footer>
-
-
-<script src="vocab-game.js"></script>
-
+    <script src="vocab-game.js"></script>
 </body>
 </html>

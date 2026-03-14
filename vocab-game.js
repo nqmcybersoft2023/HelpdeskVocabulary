@@ -1,8 +1,8 @@
 // ==========================================
-// 1. DỮ LIỆU TỪ VỰNG (VOCABULARY DATA)
+// 1. DỮ LIỆU TỪ VỰNG (Bạn có thể thêm tiếp vào đây)
 // ==========================================
 const vocabulary = [
-  {en: "troubleshoot", vi: "xử lý sự cố"}, 
+    {en: "troubleshoot", vi: "xử lý sự cố"}, 
   {en: "issue", vi: "sự cố"}, 
   {en: "incident", vi: "sự cố hệ thống"}, 
   {en: "error", vi: "lỗi"}, 
@@ -474,10 +474,10 @@ const vocabulary = [
   {en: "overclock", vi: "ép xung"},
   {en: "temperature sensor", vi: "cảm biến nhiệt"},
   {en: "short circuit", vi: "chập mạch"}
-];
+]
 
 // ==========================================
-// 2. LOGIC TÌM KIẾM TỪ ĐIỂN
+// 2. LOGIC TÌM KIẾM & MODAL TỪ ĐIỂN
 // ==========================================
 const searchInput = document.getElementById('searchInput');
 const searchResults = document.getElementById('searchResults');
@@ -485,11 +485,10 @@ const searchResults = document.getElementById('searchResults');
 if (searchInput && searchResults) {
     searchInput.addEventListener('input', function() {
         const keyword = this.value.toLowerCase().trim();
-        searchResults.innerHTML = ''; // Xóa kết quả cũ
+        searchResults.innerHTML = '';
 
         if (keyword === '') return;
 
-        // Tìm kiếm cả tiếng Anh và tiếng Việt
         const filteredWords = vocabulary.filter(word => 
             word.en.toLowerCase().includes(keyword) || 
             word.vi.toLowerCase().includes(keyword)
@@ -500,30 +499,59 @@ if (searchInput && searchResults) {
                 const div = document.createElement('div');
                 div.className = 'search-item';
                 div.innerHTML = `<span><strong>${word.en}</strong></span> <span>${word.vi}</span>`;
+                
+                // CLICK VÀO TỪ SẼ MỞ MODAL
+                div.onclick = () => {
+                    showWordDetails(word.en, word.vi);
+                    searchResults.innerHTML = ''; 
+                    searchInput.value = ''; 
+                };
+                
                 searchResults.appendChild(div);
             });
         } else {
             searchResults.innerHTML = `<div class="search-item" style="color:#7f8c8d; justify-content:center;">Không tìm thấy từ vựng.</div>`;
         }
     });
-
-    // Xóa kết quả tìm kiếm khi click ra ngoài
-    document.addEventListener('click', (e) => {
-        if (!e.target.closest('.search-container')) {
-            searchResults.innerHTML = '';
-        }
-    });
 }
 
+// Hàm xử lý Modal
+function showWordDetails(en, vi) {
+    document.getElementById('modalEnWord').innerText = en;
+    document.getElementById('modalViMeaning').innerText = vi;
+    document.getElementById('wordModal').style.display = 'flex';
+    
+    // Chỉ đọc tiếng Anh khi mở Modal
+    speak(en); 
+}
+
+function closeModal() {
+    document.getElementById('wordModal').style.display = 'none';
+}
+
+function speakModalWord() {
+    const word = document.getElementById('modalEnWord').innerText;
+    speak(word); // Đọc tiếng Anh khi bấm nút loa
+}
+
+// Click ra ngoài khoảng đen để đóng Modal
+window.addEventListener('click', function(event) {
+    const modal = document.getElementById('wordModal');
+    if (event.target === modal) {
+        closeModal();
+    }
+});
+
+
 // ==========================================
-// 3. LOGIC GAME GHÉP TỪ (ĐÃ TỐI ƯU)
+// 3. LOGIC GAME GHÉP TỪ
 // ==========================================
 const PAIRS_PER_LESSON = 10;
 let lesson = 0;
 let score = 0;
 let matched = 0;
 let selectedCard = null;
-let isProcessing = false; // Biến khóa bàn chơi chống click liên tục
+let isProcessing = false;
 
 function shuffle(arr) {
     return arr.sort(() => Math.random() - 0.5);
@@ -572,23 +600,21 @@ function renderBoard(words) {
 function addEvents() {
     document.querySelectorAll(".card").forEach(card => {
         card.addEventListener("click", () => {
-            // Nếu thẻ đã ghép đúng hoặc bàn chơi đang bị khóa thì bỏ qua
             if (card.classList.contains("correct") || isProcessing) return;
 
-            // Đọc thẻ, truyền thêm ngôn ngữ để đọc đúng accent
-            speak(card.innerText, card.dataset.lang);
+            // CHỈ PHÁT ÂM NẾU THẺ ĐƯỢC CHỌN LÀ TIẾNG ANH
+            if (card.dataset.lang === "en") {
+                speak(card.innerText);
+            }
 
-            // Nếu chưa chọn thẻ nào
             if (!selectedCard) {
                 selectedCard = card;
                 card.classList.add("selected");
                 return;
             }
 
-            // Nếu click lại chính thẻ đang chọn
             if (selectedCard === card) return;
 
-            // Khóa bàn chơi để xử lý hiệu ứng so sánh
             isProcessing = true; 
 
             if (selectedCard.dataset.match === card.innerText) {
@@ -596,7 +622,6 @@ function addEvents() {
             } else {
                 wrongPair(selectedCard, card);
             }
-
             selectedCard = null;
         });
     });
@@ -605,7 +630,6 @@ function addEvents() {
 function correctPair(card1, card2) {
     card1.classList.add("correct");
     card2.classList.add("correct");
-
     score += 10;
     matched++;
     updateScore();
@@ -613,7 +637,7 @@ function correctPair(card1, card2) {
     setTimeout(() => {
         card1.style.visibility = "hidden";
         card2.style.visibility = "hidden";
-        isProcessing = false; // Mở khóa bàn chơi
+        isProcessing = false; 
         checkLessonComplete();
     }, 600);
 }
@@ -621,16 +645,14 @@ function correctPair(card1, card2) {
 function wrongPair(card1, card2) {
     card1.classList.add("wrong");
     card2.classList.add("wrong");
-
     score -= 2;
-    // Không để điểm bị âm
     if (score < 0) score = 0;
     updateScore();
 
     setTimeout(() => {
         card1.classList.remove("wrong", "selected");
         card2.classList.remove("wrong", "selected");
-        isProcessing = false; // Mở khóa bàn chơi
+        isProcessing = false; 
     }, 600);
 }
 
@@ -643,7 +665,7 @@ function checkLessonComplete() {
         setTimeout(() => {
             lesson++;
             if (lesson * PAIRS_PER_LESSON >= vocabulary.length) {
-                alert("🎉 Chúc mừng! Bạn đã hoàn thành toàn bộ từ vựng IT Helpdesk!");
+                alert("🎉 Chúc mừng! Bạn đã hoàn thành toàn bộ từ vựng!");
             } else {
                 loadLesson();
             }
@@ -651,12 +673,18 @@ function checkLessonComplete() {
     }
 }
 
-// Hàm đọc tiếng cập nhật lại để nhận diện ngôn ngữ
-function speak(word, lang) {
+// ==========================================
+// 4. HÀM PHÁT ÂM (CHỈ ĐỌC TIẾNG ANH)
+// ==========================================
+function speak(word) {
+    // Ngắt giọng đọc hiện tại nếu người dùng bấm quá nhanh
+    speechSynthesis.cancel();
+    
     let speech = new SpeechSynthesisUtterance();
     speech.text = word;
-    // Nếu là thẻ tiếng Việt thì dùng giọng vi-VN, ngược lại dùng en-US
-    speech.lang = (lang === "vi") ? "vi-VN" : "en-US"; 
+    speech.lang = "en-US"; // Ép cứng đọc theo giọng tiếng Anh (Mỹ)
+    speech.rate = 0.9;     // Tốc độ đọc hơi chậm lại một chút cho dễ nghe (tùy chọn)
+    
     speechSynthesis.speak(speech);
 }
 
